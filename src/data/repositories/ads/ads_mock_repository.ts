@@ -4,6 +4,7 @@ import Ad from "./../../../domain/entities/ads/ad";
 import Page from "./../../../domain/entities/shared/page";
 import User from "./../../../domain/entities/auth/user";
 import Profile from "./../../../domain/entities/auth/profile";
+import GetAdsPageRequest from "./../../../domain/entities/ads/requests/get_ads_page_request";
 
 const now = new Date();
 const tomorrow = new Date(now);
@@ -83,23 +84,35 @@ class AdsMockRepository extends BaseMockRepository<Ad> implements IAdsRepository
     return ad;
   }
 
-  public async getPage(page: number, filter?: string): Promise<Page<Ad>> {
+  public async getPage(getAdsPageRequest: GetAdsPageRequest): Promise<Page<Ad>> {
     const pageSize = 10;
-    const getFilter = () => {
-      if (filter == "actual") {
+    const getRelevanceFilter = () => {
+      if (getAdsPageRequest.relevance == "actual") {
         return (item: Ad) => {
           return item.startsAt <= now && item.endsAt >= now;
         }
       }
       return () => true
     }
-    const resultItems = ads.filter(getFilter()).filter((_, index: number) => {
-      if (index >= ((page - 1) * pageSize) && (index < page * pageSize)) {
+    const getTitleFilter = () => {
+      if (getAdsPageRequest.title) {
+        return (item: Ad) => {
+          return new RegExp(getAdsPageRequest.title as string, "i").test(item.title);
+        }
+      }
+      return () => true
+    }
+    const filteredItems = ads
+      .filter(getRelevanceFilter())
+      .filter(getTitleFilter());
+    const resultItems = filteredItems
+      .filter((_, index: number) => {
+      if (index >= ((getAdsPageRequest.page - 1) * pageSize) && (index < getAdsPageRequest.page * pageSize)) {
         return true;
       }
       return false;
     });
-    return new Page(page, Math.round(ads.length / pageSize + 0.5), resultItems);
+    return new Page(getAdsPageRequest.page, Math.round(filteredItems.length / pageSize + 0.5), resultItems);
   }
 }
 

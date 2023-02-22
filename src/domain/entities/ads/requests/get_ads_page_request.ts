@@ -1,18 +1,24 @@
 class GetAdsPageRequest {
   private _page: number;
-  private _filter?: string;
+  private _relevance?: string;
+  private _title?: string;
 
-  constructor(page: number, filter?: string) {
+  constructor(page: number, relevance?: string, title?: string) {
     this._page = page;
-    this._filter = filter;
+    this._relevance = relevance;
+    this._title = title;
   }
 
   public get page() {
     return this._page;
   }
 
-  public get filter() {
-    return this._filter;
+  public get relevance() {
+    return this._relevance;
+  }
+
+  public get title() {
+    return this._title;
   }
 }
 

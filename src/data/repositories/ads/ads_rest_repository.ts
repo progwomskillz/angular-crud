@@ -2,6 +2,7 @@ import BaseRESTRepository from "../base_rest_repository";
 import IAdsRepository from "./ads_repository.interface";
 import Ad from "./../../../domain/entities/ads/ad";
 import Page from "./../../../domain/entities/shared/page";
+import GetAdsPageRequest from "./../../../domain/entities/ads/requests/get_ads_page_request";
 
 class AdsRESTRepository extends BaseRESTRepository<Ad> implements IAdsRepository {
   public async create(ad: Ad): Promise<Ad> {
@@ -31,12 +32,15 @@ class AdsRESTRepository extends BaseRESTRepository<Ad> implements IAdsRepository
       });
   }
 
-  public async getPage(page: number, filter?: string): Promise<Page<Ad>> {
-    let qs = "";
-    if (filter) {
-      qs += `&filter=${filter}`
+  public async getPage(getAdsPageRequest: GetAdsPageRequest): Promise<Page<Ad>> {
+    let qs = "?page=${getAdsPageRequest.page}";
+    if (getAdsPageRequest.relevance) {
+      qs += `&filter=${getAdsPageRequest.relevance}`
     }
-    return this.request(`?page=${page}${qs}`, "GET")
+    if (getAdsPageRequest.title) {
+      qs += `&title=${getAdsPageRequest.title}`
+    }
+    return this.request(qs, "GET")
       .then(data => {
         data = data.json();
         return new Page(

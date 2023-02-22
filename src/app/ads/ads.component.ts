@@ -50,10 +50,14 @@ export class AdsComponent {
   }
 
   private async getPage() {
-    const data : { page: number, filter?: string } = { page: this._page };
-    const filter = new URLSearchParams(window.location.search).get("filter");
-    if (filter) {
-      data.filter = filter;
+    const title = new URLSearchParams(window.location.search).get("title");
+    const data : { page: number, relevance?: string, title: string } = {
+      page: this._page,
+      title: title || ""
+    };
+    const relevance = new URLSearchParams(window.location.search).get("relevance");
+    if (relevance) {
+      data.relevance = relevance;
     }
 
     this._isLoading = true;

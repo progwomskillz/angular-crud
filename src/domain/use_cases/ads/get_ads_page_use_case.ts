@@ -16,7 +16,7 @@ class GetAdsPageUseCase implements IUseCase<GetAdsPageRequest, Page<Ad>> {
 
   async process(getAdsPageRequest: GetAdsPageRequest): Promise<Page<Ad>> {
     this.getAdsPageValidationUtil.validate(getAdsPageRequest);
-    return this.adsRepository.getPage(getAdsPageRequest.page, getAdsPageRequest.filter);
+    return this.adsRepository.getPage(getAdsPageRequest);
   }
 }
 

@@ -15,7 +15,7 @@
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" routerLink="/ads" ariaCurrentWhenActive="page">All ads</a></li>
-            <li><a class="dropdown-item" [routerLink]="['/ads']" [queryParams]="{filter: 'actual'}" ariaCurrentWhenActive="page">Actual ads</a></li>
+            <li><a class="dropdown-item" [routerLink]="['/ads']" [queryParams]="{relevance: 'actual'}" ariaCurrentWhenActive="page">Actual ads</a></li>
             <li><a class="dropdown-item" routerLink="/ads/create" ariaCurrentWhenActive="page">Create ad</a></li>
           </ul>
         </li>

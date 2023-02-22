@@ -1,0 +1,17 @@
+<div *ngIf="isLoading">Loading...</div>
+<div *ngIf="!isLoading && !items">Not Found</div>
+<div *ngIf="!isLoading && items" class="container-md ads">
+  <div class="card" *ngFor="let item of items">
+    <div class="card-body">
+      <h5 class="card-title">{{item.title}}</h5>
+      <p class="card-title">{{item.body}}</p>
+      <a routerLink="/ads/{{item.id}}">Open</a>
+    </div>
+  </div>
+
+  <ul class="pagination">
+    <li class="page-item"><a class="page-link ads__button" *ngIf="page > 1" (click)="changePage(page - 1)">{{page - 1}}</a></li>
+    <li class="page-item active"><a class="page-link">{{page}}</a></li>
+    <li class="page-item"><a class="page-link ads__button" *ngIf="page != pageCount" (click)="changePage(page + 1)">{{page+1}}</a></li>
+  </ul>
+</div>

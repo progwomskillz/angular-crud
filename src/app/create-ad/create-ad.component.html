@@ -1,0 +1,46 @@
+<form class="container-md">
+  <div class="mb-3">
+    <label for="title" class="form-label">Title</label>
+    <input type="text" class="form-control" id="title" (change)="onChangeTitle($event)">
+    <ul *ngIf="errors['title']">
+      <li class="create-ad__validation-error" *ngFor="let error of errors['title']">
+        {{error.message}}
+      </li>
+    </ul>
+  </div>
+  <div class="mb-3">
+    <label for="body" class="form-label">Body</label>
+    <textarea class="form-control" id="body" (change)="onChangeBody($event)"></textarea>
+    <ul *ngIf="errors['body']">
+      <li class="create-ad__validation-error" *ngFor="let error of errors['body']">
+        {{error.message}}
+      </li>
+    </ul>
+  </div>
+  <div class="mb-3">
+    <label for="startsAt" class="form-label">Starts at</label>
+    <input type="date" class="form-control" id="startsAt" (change)="onChangeStartsAt($event)">
+    <ul *ngIf="errors['startsAt']">
+      <li class="create-ad__validation-error" *ngFor="let error of errors['startsAt']">
+        {{error.message}}
+      </li>
+    </ul>
+  </div>
+  <div class="mb-3">
+    <label for="endsAt" class="form-label">Ends at</label>
+    <input type="date" class="form-control" id="endsAt" (change)="onChangeEndsAt($event)">
+    <ul *ngIf="errors['endsAt']">
+      <li class="create-ad__validation-error" *ngFor="let error of errors['endsAt']">
+        {{error.message}}
+      </li>
+    </ul>
+  </div>
+  <button
+    type="submit"
+    class="btn btn-primary"
+    [ngClass]="{'disabled' : !isButtonActive}"
+    (click)="create($event)"
+  >
+    Create
+  </button>
+</form>

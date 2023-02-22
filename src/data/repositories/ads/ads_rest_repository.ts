@@ -35,7 +35,7 @@ class AdsRESTRepository extends BaseRESTRepository<Ad> implements IAdsRepository
   public async getPage(getAdsPageRequest: GetAdsPageRequest): Promise<Page<Ad>> {
     let qs = "?page=${getAdsPageRequest.page}";
     if (getAdsPageRequest.relevance) {
-      qs += `&filter=${getAdsPageRequest.relevance}`
+      qs += `&relevance=${getAdsPageRequest.relevance}`
     }
     if (getAdsPageRequest.title) {
       qs += `&title=${getAdsPageRequest.title}`

@@ -14,10 +14,10 @@ class GetAdsPageValidationUtil extends BaseValidationUil implements IValidationU
 
   public validate(getAdsPageRequest: GetAdsPageRequest): void | never {
     this.errors = {};
-    const availableFilters: Array<string> = ["actual"];
+    const availableRelevances: Array<string> = ["actual"];
 
-    if (getAdsPageRequest.relevance && !this.stringInArrayValidator.isValid(getAdsPageRequest.relevance, availableFilters)) {
-      this.appendError("filter", this.stringInArrayValidator.error)
+    if (getAdsPageRequest.relevance && !this.stringInArrayValidator.isValid(getAdsPageRequest.relevance, availableRelevances)) {
+      this.appendError("relevance", this.stringInArrayValidator.error)
     }
     this.processErrors();
   }
